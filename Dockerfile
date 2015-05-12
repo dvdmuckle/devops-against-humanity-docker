@@ -36,7 +36,7 @@ RUN /etc/init.d/postgresql start &&\
   psql --command "REVOKE CONNECT ON DATABASE pyz FROM PUBLIC;" &&\
   psql --command "GRANT CONNECT ON DATABASE pyz TO pyz;" &&\
   psql --command "GRANT ALL ON ALL TABLES IN SCHEMA public TO pyz;"
-CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]
+
 USER root
 RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
 RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
