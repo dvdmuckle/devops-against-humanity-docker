@@ -8,7 +8,7 @@ ENV PGPASSWORD password
 RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
 # Add postgres repo
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # Install!
 RUN apt-get update && apt-get install -y postgresql-9.3 postgresql-client-9.3 git maven default-jdk zip
@@ -18,12 +18,12 @@ RUN useradd -m pyz
 
 USER pyz
 # Now pull the code, because we have to compile it.
-RUN git clone https://github.com/ajanata/PretendYoureXyzzy /home/pyz/PretendYoureXyzzy
+RUN git clone https://github.com/dvdmuckle/PretendYoureXyzzy /home/pyz/PretendYoureXyzzy
 WORKDIR /home/pyz/PretendYoureXyzzy
 COPY build.properties /home/pyz/PretendYoureXyzzy/build.properties
 RUN mvn clean package war:exploded
 WORKDIR /home/pyz/PretendYoureXyzzy/target/ROOT/
-RUN zip -r ../../pyz.war ./*
+RUN zip -r ../../pyz.war . -i ./*
 # Now do the port stuff
 EXPOSE 8080
 
